@@ -6,9 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import br.com.rotacilio.worktimetracker.R
 import br.com.rotacilio.worktimetracker.databinding.FragmentSignupBinding
+import br.com.rotacilio.worktimetracker.viewmodels.SignUpViewModel
 
 class SignUpFragment : Fragment() {
 
@@ -17,13 +21,19 @@ class SignUpFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val viewModel = ViewModelProvider(this).get(SignUpViewModel::class.java)
         val binding =
             DataBindingUtil.inflate<FragmentSignupBinding>(
                 inflater, R.layout.fragment_signup, container, false)
+        binding.signUpViewModel = viewModel
+        binding.lifecycleOwner = this
 
-        binding.btnCancel.setOnClickListener {
-            it.findNavController().popBackStack()
-        }
+        viewModel.cancel.observe(viewLifecycleOwner, Observer { doCancel ->
+            if (doCancel) {
+                this.findNavController().popBackStack()
+                viewModel.doneCancel()
+            }
+        })
 
         return binding.root
     }

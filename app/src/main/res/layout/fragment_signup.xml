@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="signUpViewModel"
+            type="br.com.rotacilio.worktimetracker.viewmodels.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,7 +37,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_first_name"
-                android:inputType="textCapWords" />
+                android:inputType="textCapWords"
+                android:text="@={signUpViewModel.firstName}"/>
 
             <EditText
                 android:id="@+id/edtLastName"
@@ -43,7 +46,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:hint="@string/hint_last_name"
-                android:inputType="textCapWords" />
+                android:inputType="textCapWords"
+                android:text="@={signUpViewModel.lastName}"/>
 
             <EditText
                 android:id="@+id/edtEmail"
@@ -51,7 +55,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:hint="@string/hint_email"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:text="@={signUpViewModel.email}"/>
 
             <EditText
                 android:id="@+id/edtPassword"
@@ -59,7 +64,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:hint="@string/hint_password"
-                android:inputType="numberPassword" />
+                android:inputType="numberPassword"
+                android:text="@={signUpViewModel.password}"/>
 
             <EditText
                 android:id="@+id/edtConfirmPassword"
@@ -67,7 +73,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:hint="@string/hint_confirm_password"
-                android:inputType="numberPassword" />
+                android:inputType="numberPassword"
+                android:text="@={signUpViewModel.confirmPassword}"/>
 
         </LinearLayout>
 
@@ -82,7 +89,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/formLayout"
             app:layout_constraintEnd_toStartOf="@+id/btnCancel"
-            app:layout_constraintVertical_bias="1"/>
+            app:layout_constraintVertical_bias="1"
+            android:onClick="@{() -> signUpViewModel.onRegister()}"/>
 
         <Button
             android:id="@id/btnCancel"
@@ -94,7 +102,8 @@
             android:layout_marginLeft="12dp"
             app:layout_constraintBottom_toBottomOf="@id/btnRegister"
             app:layout_constraintEnd_toEndOf="@id/formLayout"
-            app:layout_constraintStart_toEndOf="@id/btnRegister"/>
+            app:layout_constraintStart_toEndOf="@id/btnRegister"
+            android:onClick="@{() -> signUpViewModel.onCancel()}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
