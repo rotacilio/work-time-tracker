@@ -4,6 +4,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import br.com.rotacilio.worktimetracker.database.ObjectBox
+import br.com.rotacilio.worktimetracker.models.User
+import io.objectbox.android.AndroidScheduler
+import io.objectbox.query.Query
+import io.objectbox.reactive.DataSubscription
 
 class SignUpViewModel : ViewModel() {
 
@@ -16,6 +21,11 @@ class SignUpViewModel : ViewModel() {
     private val _cancel = MutableLiveData<Boolean>()
     val cancel: LiveData<Boolean> get() = _cancel
 
+    private val _allUsers = MutableLiveData<List<User>>()
+    val allUsers: LiveData<List<User>> get() = _allUsers
+
+    private val userBox = ObjectBox.boxStore.boxFor(User::class.java)
+
     init {
         firstName.value = ""
         lastName.value = ""
@@ -23,10 +33,19 @@ class SignUpViewModel : ViewModel() {
         password.value = ""
         confirmPassword.value = ""
         _cancel.value = false
+
+        _allUsers.value = userBox.all
     }
 
     fun onRegister() {
-        Log.i("SignUpViewModel", "firstName: ${firstName.value}")
+        val user = User(
+            firstName = firstName.value!!,
+            lastName = lastName.value!!,
+            email = email.value!!,
+            password = password.value!!
+        )
+        userBox.put(user)
+        _allUsers.value = userBox.all
     }
 
     fun onCancel() {

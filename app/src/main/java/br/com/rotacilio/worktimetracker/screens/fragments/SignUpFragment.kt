@@ -1,6 +1,7 @@
 package br.com.rotacilio.worktimetracker.screens.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +34,10 @@ class SignUpFragment : Fragment() {
                 this.findNavController().popBackStack()
                 viewModel.doneCancel()
             }
+        })
+
+        viewModel.allUsers.observe(viewLifecycleOwner, Observer { users ->
+            Log.i("SignUpFragment", "onCreateView: users: ${users.size}")
         })
 
         return binding.root
