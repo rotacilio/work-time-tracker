@@ -1,14 +1,10 @@
 package br.com.rotacilio.worktimetracker.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import br.com.rotacilio.worktimetracker.database.ObjectBox
+import br.com.rotacilio.worktimetracker.database.dao.UserDao
 import br.com.rotacilio.worktimetracker.models.User
-import io.objectbox.android.AndroidScheduler
-import io.objectbox.query.Query
-import io.objectbox.reactive.DataSubscription
 
 class SignUpViewModel : ViewModel() {
 
@@ -24,7 +20,7 @@ class SignUpViewModel : ViewModel() {
     private val _allUsers = MutableLiveData<List<User>>()
     val allUsers: LiveData<List<User>> get() = _allUsers
 
-    private val userBox = ObjectBox.boxStore.boxFor(User::class.java)
+    private val userDao = UserDao()
 
     init {
         firstName.value = ""
@@ -34,7 +30,7 @@ class SignUpViewModel : ViewModel() {
         confirmPassword.value = ""
         _cancel.value = false
 
-        _allUsers.value = userBox.all
+        _allUsers.value = userDao.findAll()
     }
 
     fun onRegister() {
@@ -44,8 +40,8 @@ class SignUpViewModel : ViewModel() {
             email = email.value!!,
             password = password.value!!
         )
-        userBox.put(user)
-        _allUsers.value = userBox.all
+        userDao.insert(user)
+        _allUsers.value = userDao.findAll()
     }
 
     fun onCancel() {

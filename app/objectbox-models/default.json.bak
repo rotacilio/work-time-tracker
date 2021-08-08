@@ -27,9 +27,7 @@
         {
           "id": "4:780663918823747526",
           "name": "email",
-          "indexId": "1:9178161834266336417",
-          "type": 9,
-          "flags": 2080
+          "type": 9
         },
         {
           "id": "5:6456836357981281469",
@@ -46,7 +44,7 @@
     }
   ],
   "lastEntityId": "1:6868565017337902349",
-  "lastIndexId": "1:9178161834266336417",
+  "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
